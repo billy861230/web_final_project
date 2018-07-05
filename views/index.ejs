@@ -1,0 +1,44 @@
+<html>
+
+<head>
+    <title>judge</title>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+    </script>
+</head>
+
+<body>
+    <div>username</div>
+    <input type="text" id="name">
+    <div>password</div>
+    <input type="text" id="pwd">
+    <input type="button" id="sign in" onclick="sign_in()" value="sign in">
+    <div>do not have an account?</div>
+    <a href="/sign_up">sign up</a>
+    <script>
+        var socket = io('http://localhost:3000');
+
+        function sign_in(){
+            let name=document.getElementById('name').value;
+            let pwd=document.getElementById('pwd').value;
+            let data={
+                name:name,
+                pwd:pwd
+            }
+            socket.emit('sign_in',data);
+            document.getElementById('name').value='';
+            document.getElementById('pwd').value='';
+        }
+
+        socket.on('err',(data)=>{
+            alert(data);
+        })
+
+        socket.on('log_in',(data)=>{
+            console.log(data);
+            window.location='/usr/'+data.name;
+        })
+    </script>
+</body>
+
+</html>

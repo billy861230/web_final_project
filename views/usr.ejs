@@ -1,0 +1,17 @@
+<head>
+    <title id="name"><%=name%></title>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+    </script>
+</head>
+
+<body>
+    <div>hello, <%=name%></div>
+    <input type="button" onclick="probs()" value="problems">
+    <script>
+        function probs(){
+            var name=document.title;
+            window.location='/prob/0/';
+        }
+    </script>
+</body>

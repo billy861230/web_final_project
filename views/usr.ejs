@@ -8,10 +8,15 @@
 <body>
     <div>hello, <%=name%></div>
     <input type="button" onclick="probs()" value="problems">
+    <input type="button" onclick="profile()" value="profile">
     <script>
         function probs(){
             var name=document.title;
-            window.location='/prob/0/';
+            window.location='/prob/0';
+        }
+        function profile(){
+            var name = document.title;
+            window.location = '/profile/'+name;
         }
     </script>
 </body>

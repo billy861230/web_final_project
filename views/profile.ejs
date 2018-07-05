@@ -1,0 +1,51 @@
+<head>
+    <title>
+        judge | <%=name%>
+    </title>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+    </script>
+</head>
+
+<body>
+    <input type="button" onclick="probs()" value="problems">
+    <div>username
+    </div>
+    <div id="name"><%=name%></div>
+    <div>previous password</div>
+    <input type="text" id="pp">
+    <div>new password</div>
+    <input type="text" id="pwd">
+    <div>confirm new password</div>
+
+    <input type="text" id="pwd_c">
+    
+    <input type="button" onclick="modify()" value="submit">
+    <script>
+        function probs() {
+            var name = document.title;
+            window.location = '/prob/0';
+        }
+        
+        var socket = io('http://localhost:3000');
+        function modify(){
+            let name = document.getElementById('name').innerHTML;
+            let pp=document.getElementById('pp').value;
+            let pwd = document.getElementById('pwd').value;
+            let pwd_c = document.getElementById('pwd_c').value;
+            if (pwd !== pwd_c) {
+                alert('password do not match!');
+                return;
+            }
+            let data = {
+                name: name,
+                pwd: pp,
+                n_pwd: pwd
+            }
+            socket.emit('modify', data);
+        }
+        socket.on('err',(err)=>{
+            alert(err);
+        })
+    </script>
+</body>

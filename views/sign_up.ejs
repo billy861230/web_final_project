@@ -12,6 +12,8 @@
     <input type="text" id="name">
     <div>password</div>
     <input type="text" id="pwd">
+    <div>password comfirm</div>
+    <input type="text" id="pwd_c">
     <input type="button" id="signup" onclick="sign_up()" value="sign up">
     <script>
         var socket = io('http://localhost:3000');
@@ -19,6 +21,11 @@
         function sign_up() {
             let name = document.getElementById('name').value;
             let pwd = document.getElementById('pwd').value;
+            let pwd_c=document.getElementById('pwd_c').value;
+            if(pwd!==pwd_c){
+                alert('password do not match!');
+                return;
+            }
             let data = {
                 name: name,
                 pwd: pwd

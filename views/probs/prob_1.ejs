@@ -36,9 +36,7 @@
         </tr>
     </table>
         <div>source code</div>
-    <textarea cols="200" rows="50" id="src" style="font-size:18px;"/textarea>
-    
-    </textarea>
+    <textarea cols="200" rows="50" id="src" style="font-size:18px;"></textarea>
     <input type="button" value="submit" onclick="submit()">
     <script>
         var result=document.getElementById('result');
@@ -66,6 +64,10 @@
         socket.on('err',(err)=>{
             alert(err);
         })
+
+        function problem() {
+            window.location = '/prob/0';
+        }
 
     </script>
     

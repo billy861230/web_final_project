@@ -58,6 +58,10 @@ app.get('/prob/:id', (req, res) => {
     }
 })
 
+app.get('/profile/:name', (req, res) => {
+    res.render('profile.ejs', { name: req.params.name });
+})
+
 server.listen(port, () => {
     console.log("Server Started. http://localhost:" + port);
 });
@@ -98,10 +102,25 @@ io.on('connection', (socket) => {
         })
     })
 
+    socket.on('modify', (data) => {
+        console.log(data);
+        Usr.findOne({ name: data.name }, (err, result) => {
+            console.log('result');
+            console.log(result);
+            if (result.pwd === data.pwd) {
+                result.pwd = data.n_pwd;
+                result.save();
+                socket.emit('err', 'modify successly');
+            } else {
+                socket.emit('err', 'wrong password');
+            }
+        })
+    })
+
     socket.on('submit', (data) => {
         console.log(data);
         fs.writeFileSync('main.cpp', data.src);
-        var command = './judge.sh ' + data.id;
+        var command = 'bash judge.sh ' + data.id;
         console.log(command);
         exec(command);
         let judge_1 = fs.readFileSync('result_1', 'utf-8');

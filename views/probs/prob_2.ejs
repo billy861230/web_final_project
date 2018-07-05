@@ -1,0 +1,124 @@
+<head>
+    <title>judge
+    </title>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+    </script>
+</head>
+
+<body>
+    <input type="button" onclick="problem()" value="problems">
+    <div id="id">2</div>
+    <h1></h1>
+    <h2>description</h2>
+    <div>
+         Scientists aim high. Mad Scientists aim higher. Kyōma Hōōin(a.k.a Okabe Rintarō) wants to learn more about the mystery of
+        world lines in hope to wield his power to its full extent. To achieve this, Kyōma seeks for your help. This time he
+        provides you a list of triggerable events along with the max times each can be triggered. Now he wants you to help figure
+        out if a certain world line is reachable given the current world line. If reachable, he would also like you calculate the
+        least amount of events needing to be triggered to reach target world line.
+    </div>
+    <h2>input format</h2>
+    <div>
+         The first line is an integer N, indicating the number of triggerable events. Following N lines are integers representing
+        these events and how much times it can be triggered for each query. The next line contains an integer Q , indicating the
+        number of queries. The last Q lines each contains two integers representing current world line and target world line respectively.
+    </div>
+    <div>
+        worldline is less than 2^19 
+    </div>
+    <h2>output format</h2>
+    <div>
+        For each query operation, please output one line containing the minimum count of events needed to be triggered to reach
+        target. If the target is unreachable, output UNREACHABLE instead.
+    </div>
+    <h2>
+        formula
+    </h2>
+    <div>
+        The next world line = Current world line ⊕ the event triggered.
+    </div>
+    <div>
+         ⊕ means the steins;gate's choice(more commonly referred to as XOR)
+    </div>
+    <h2>sample input</h2>
+    <div>
+        2 </div>
+        <div>
+             5 2
+        </div>
+        <div>
+            4 1 
+        </div>
+        <div>
+            3 
+        </div>
+        <div>
+            0 5 
+        </div>
+        <div>
+            1 0 
+        </div>
+        <div>
+            1 2
+        </div>
+    </div>
+
+
+    <h2>
+        sample output</h2>
+    <div>
+        1 </div>
+    <div>
+        2 
+    </div>
+    <div>
+        UNREACHABLE
+    </div>
+    <table border="1" id="result">
+        <tr>
+            <td>1.in</td>
+            <td id="result_1"></td>
+        </tr>
+        <tr>
+            <td>2.in</td>
+            <td id="result_2"></td>
+        </tr>
+    </table>
+    <div>source code</div>
+    <textarea cols="200" rows="50" id="src" style="font-size:18px;"></textarea>
+    <input type="button" value="submit" onclick="submit()">
+    <script>
+        var result = document.getElementById('result');
+        result.style.display = 'none';
+        var socket = io('http://localhost:3000');
+        function submit() {
+            var id = document.getElementById('id').innerHTML;
+            var src = document.getElementById('src').value;
+            console.log(id);
+            let data = {
+                id: id,
+                src: src
+            };
+            console.log(data);
+            socket.emit('submit', data);
+        }
+
+        socket.on('result', (data) => {
+            console.log(data);
+            result.style.display = 'inline';
+            document.getElementById('result_1').innerHTML = data.result_1;
+            document.getElementById('result_2').innerHTML = data.result_2;
+        })
+
+        socket.on('err', (err) => {
+            alert(err);
+        })
+
+        function problem(){
+            window.location='/prob/0';
+        }
+
+    </script>
+
+</body>
